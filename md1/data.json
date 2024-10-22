@@ -1,0 +1,70 @@
+{
+  "$id": "1",
+  "Teachers": {
+    "$id": "2",
+    "$values": [
+      {
+        "$id": "3",
+        "ContractDate": "2020-09-28",
+        "Name": "El\u012Bna",
+        "Surname": "Kalni\u0146a",
+        "FullName": "El\u012Bna Kalni\u0146a",
+        "Gender": 1
+      }
+    ]
+  },
+  "Students": {
+    "$id": "4",
+    "$values": [
+      {
+        "$id": "5",
+        "StudentIdNumber": "abc1234",
+        "Name": "Ingus",
+        "Surname": "Valheims",
+        "FullName": "Ingus Valheims",
+        "Gender": 0
+      }
+    ]
+  },
+  "Courses": {
+    "$id": "6",
+    "$values": [
+      {
+        "$id": "7",
+        "Name": "Lietot\u0146u izstr\u0101de .NET vid\u0113",
+        "Teacher": {
+          "$ref": "3"
+        }
+      }
+    ]
+  },
+  "Assignments": {
+    "$id": "8",
+    "$values": [
+      {
+        "$id": "9",
+        "Deadline": "2024-10-07",
+        "Course": {
+          "$ref": "7"
+        },
+        "Description": "Pirm\u0101 m\u0101jasdarba uzdevums"
+      }
+    ]
+  },
+  "Submissions": {
+    "$id": "10",
+    "$values": [
+      {
+        "$id": "11",
+        "Assignment": {
+          "$ref": "9"
+        },
+        "Student": {
+          "$ref": "5"
+        },
+        "SubmissionTime": "2024-10-07T13:19:33.6861014+03:00",
+        "Score": 100
+      }
+    ]
+  }
+}
