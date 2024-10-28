@@ -1,52 +1,51 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace md2;
 
 public partial class AssignmentEditPage : ContentPage
 {
-	private Assignment _assignment;
-	private IDataManager _dataManager = DependencyService.Get<IDataManager>();
+	private readonly Assignment _assignment;
+	private readonly bool _isNewAssignment;
+	private readonly IDataManager _dataManager = DependencyService.Get<IDataManager>();
 
-	public List<Course> Courses { 
-		get
-		{
-			return _dataManager.Data.Courses;
-		}
-	}
-
-	public AssignmentEditPage(Assignment assignment)
+	public AssignmentEditPage(Assignment assignment, bool isNewAssignment)
 	{
 		InitializeComponent();
 
 		_assignment = assignment;
+		_isNewAssignment = isNewAssignment;
 
-		AssignmentDeadline.Date = DateTime.Parse(assignment.Deadline.ToString());
-		AssignmentCourseName.SelectedItem = assignment.Course;
-		AssignmentDescription.Text = assignment.Description.ToString();
+		CoursePicker.ItemsSource = _dataManager.Data.Courses;
 
-		BindingContext = this;
+		if (!_isNewAssignment)
+		{
+			Deadline.Date = DateTime.Parse(_assignment.Deadline.ToString());
+			CoursePicker.SelectedItem = _assignment.Course;
+			Description.Text = _assignment.Description.ToString();
+		}
 	}
 
 	public async void OnSaveClicked(object sender, EventArgs e) {
-		var date = DateOnly.FromDateTime(AssignmentDeadline.Date);
-		var course = AssignmentCourseName.SelectedItem as Course;
-		var description  = AssignmentDescription.Text;
-		Debug.WriteLine(date);
-		Debug.WriteLine(course);
-		Debug.WriteLine(description);
+		var deadline = DateOnly.FromDateTime(Deadline.Date);
+		var course = CoursePicker.SelectedItem as Course;
+		var description = Description.Text;
 
-		if (course != null)
+		if (course == null)
 		{
-			_assignment.Deadline = date;
-			_assignment.Course = course;
-			_assignment.Description = description;
+			await DisplayAlert("Kļūda", "Lūdzu izvēlaties kursu!", "Ok");
+			return;
+		}
 
-			await DisplayAlert("Saved", "Assignment updated!", "Ok");
-		}
-		else
+		_assignment.Deadline = deadline;
+		_assignment.Course = course;
+		_assignment.Description = description;
+		
+		if (_isNewAssignment)
 		{
-			await DisplayAlert("Error", "Please select a Course!", "Ok");
+			_dataManager.Data.Assignments.Add(_assignment);
 		}
+
+		await Navigation.PopAsync();
 	}
 
 	public async void OnCancelClicked(object sender, EventArgs e)

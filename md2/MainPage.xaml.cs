@@ -1,47 +1,59 @@
 ﻿namespace md2
 {
-    //public class TestClass(string name)
-    //{
-    //    public string Name { get; set; } = name;
-    //}
     public partial class MainPage : ContentPage
     {
         // https://stackoverflow.com/questions/74789634/how-to-share-data-between-pages-in-maui
-        IDataManager dataManager = DependencyService.Get<IDataManager>();
-        //public List<TestClass> Test;
+        private readonly IDataManager _dataManager = DependencyService.Get<IDataManager>();
+
         public MainPage()
         {
             InitializeComponent();
-            //Test = new List<TestClass>();
-            //Test.Add(new TestClass("foo"));
-            //Test.Add(new TestClass("bar"));
-            //Test.Add(new TestClass("baz"));
-
-            //TestList.ItemsSource = Test;
         }
+
         private void OnLogButtonClicked(object sender, EventArgs e)
         {
-            //SemanticScreenReader.Announce(LogBtn.Text);
+            LogOutput.Text = _dataManager.Print();
+        }
 
-            LogOutput.Text = dataManager.Print();
-            if (dataManager.Data.Students.Any())
-                LogOutput.Text += "\n" + dataManager.Data.Students.First().ToString();
-        }
-        private void OnSeedDataButtonClicked(object sender, EventArgs e)
+        private async void OnSeedDataButtonClicked(object sender, EventArgs e)
         {
-            dataManager.CreateTestData();
+            _dataManager.CreateTestData();
+
+			await DisplayAlert("Paziņojums", "Testa dati izveidoti!", "Ok");
         }
-        private void OnResetButtonClicked(object sender, EventArgs e)
+
+        private async void OnResetButtonClicked(object sender, EventArgs e)
         {
-            dataManager.Reset();
+            _dataManager.Reset();
+
+			await DisplayAlert("Paziņojums", "DataManager atiestatīts!", "Ok");
         }
-        private void OnSaveButtonClicked(object sender, EventArgs e)
+
+        private async void OnSaveButtonClicked(object sender, EventArgs e)
         {
-            dataManager.Save("C:\\Windows\\Temp\\data.json");
+            bool success = _dataManager.Save("C:\\Windows\\Temp\\data.json");
+
+            if (success)
+            {
+                await DisplayAlert("Paziņojums", "Dati saglabāti!", "Ok");
+            }
+            else
+            {
+                await DisplayAlert("Kļūda", "Neizdevās saglabāt datus!", "Ok");
+            }
         }
-        private void OnLoadButtonClicked(object sender, EventArgs e)
+        private async void OnLoadButtonClicked(object sender, EventArgs e)
         {
-            dataManager.Load("C:\\Windows\\Temp\\data.json");
+            bool success = _dataManager.Load("C:\\Windows\\Temp\\data.json");
+
+            if (success)
+            {
+                await DisplayAlert("Paziņojums", "Dati ielādēti!", "Ok");
+            }
+            else
+            {
+                await DisplayAlert("Kļūda", "Neizdevās ielādēt datus!", "Ok");
+            }
         }
     }
 

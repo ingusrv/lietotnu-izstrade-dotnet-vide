@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="md2.AssignmentEditPage"
-             Title="AssignmentEditPage">
+             x:Class="md2.SubmissionEditPage"
+             Title="SubmissionEditPage">
     <VerticalStackLayout>
         <Label 
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+        />
 
-        <Label Text="Deadline"/>
-        <DatePicker x:Name="Deadline"/>
-        <Picker x:Name="CoursePicker" Title="Course"/>
-        <Label Text="Description"/>
-        <Editor x:Name="Description" Text=""/>
+        <Label Text="Submission Time"/>
+        <DatePicker x:Name="SubmissionDate"/>
+        <TimePicker x:Name="SubmissionTime"/>
+        <Picker x:Name="AssignmentPicker" Title="Assignment"/>
+        <Picker x:Name="StudentPicker" Title="Student"/>
+        <Label Text="Score"/>
+        <Entry x:Name="Score"/>
 
         <Button Text="Save" Clicked="OnSaveClicked"/>
         <Button Text="Cancel" Clicked="OnCancelClicked"/>
-
     </VerticalStackLayout>
 </ContentPage>

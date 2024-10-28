@@ -5,29 +5,14 @@
              Title="DataPage">
     <ScrollView>
         <VerticalStackLayout>
-            <Label
-                Text="Students"
-                Style="{StaticResource SubHeadline}"
-            />
-            <ListView ItemsSource="{Binding Students}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <VerticalStackLayout Margin="20">
-                                <Label Text="{Binding}"/>
-                                <!-- par šiem met warning bet tomēr strādā
-                            <Label Text="{Binding FullName}"/>
-                            <Label Text="{Binding Gender}"/>
-                            <Label Text="{Binding StudentIdNumber}"/>
-                            -->
-                            </VerticalStackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <!-- Pieliku add pogas arī pie pārējām sadaļām, lai bez testa datiem no nulles varētu izveidot visu struktūru -->
             <Label
                 Text="Teachers"
                 Style="{StaticResource SubHeadline}"
+            />
+            <Button
+                Text="New Teacher"
+                Clicked="OnTeacherCreateClicked"
             />
             <ListView ItemsSource="{Binding Teachers}">
                 <ListView.ItemTemplate>
@@ -41,8 +26,41 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Label
+                Text="Students"
+                Style="{StaticResource SubHeadline}"
+            />
+            <Button
+                Text="New Student"
+                Clicked="OnStudentCreateClicked"
+            />
+            <ListView ItemsSource="{Binding Students}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <VerticalStackLayout Margin="20">
+                                <Label Text="{Binding}"/>
+                                <!-- par šiem met warning bet tomēr strādā
+                            <Label Text="{Binding FullName}"/>
+                            <Label Text="{Binding Gender}"/>
+                            <Label Text="{Binding StudentIdNumber}"/>
+                            -->
+                                <Button
+                                    Text="Edit"
+                                    Clicked="OnStudentEditClicked"
+                                    BindingContext="{Binding}"
+                                />
+                            </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label
                 Text="Courses"
                 Style="{StaticResource SubHeadline}"
+            />
+            <Button
+                Text="New Course"
+                Clicked="OnCourseCreateClicked"
             />
             <ListView ItemsSource="{Binding Courses}">
                 <ListView.ItemTemplate>
@@ -58,6 +76,10 @@
             <Label
                 Text="Assignments"
                 Style="{StaticResource SubHeadline}"
+            />
+            <Button
+                Text="New Assignment"
+                Clicked="OnAssignmentCreateClicked"
             />
             <ListView ItemsSource="{Binding Assignments}">
                 <ListView.ItemTemplate>
@@ -84,6 +106,10 @@
             <Label
                 Text="Submissions"
                 Style="{StaticResource SubHeadline}"
+            />
+            <Button
+                Text="New Submission"
+                Clicked="OnSubmissionCreateClicked"
             />
             <ListView ItemsSource="{Binding Submissions}">
                 <ListView.ItemTemplate>

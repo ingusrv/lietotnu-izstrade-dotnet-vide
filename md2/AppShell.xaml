@@ -19,9 +19,4 @@
             Route="DataPage"
         />
     </TabBar>
-    <ShellContent
-        Title="Edit Assignment"
-        ContentTemplate="{DataTemplate local:AssignmentEditPage}"
-        Route="AssignmentEdit"
-    />
 </Shell>

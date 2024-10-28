@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="md2.StudentEditPage"
+             Title="StudentEditPage">
+    <VerticalStackLayout>
+        <Label 
+            Text="Edit Student"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Label Text="Name"/>
+        <Entry x:Name="Name"/>
+        <Label Text="Surname"/>
+        <Entry x:Name="Surname"/>
+        <Picker x:Name="GenderPicker" Title="Gender">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Man</x:String>
+                    <x:String>Woman</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Label Text="Student Id number"/>
+        <Entry x:Name="StudentIdNumber"/>
+        
+        <Button Text="Save" Clicked="OnSaveClicked"/>
+        <Button Text="Cancel" Clicked="OnCancelClicked"/>
+    </VerticalStackLayout>
+</ContentPage>
