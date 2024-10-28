@@ -9,12 +9,12 @@
 
     <TabBar>
         <ShellContent
-            Title="Home"
+            Title="Sākums"
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage"
         />
         <ShellContent
-            Title="Data List"
+            Title="Datu saraksts"
             ContentTemplate="{DataTemplate local:DataPage}"
             Route="DataPage"
         />

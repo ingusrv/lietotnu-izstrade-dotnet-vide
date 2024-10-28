@@ -2,18 +2,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="md2.StudentEditPage"
-             Title="StudentEditPage">
-    <VerticalStackLayout>
+             Title="Rediģēt studentu">
+    <VerticalStackLayout Padding="20, 10" Spacing="10">
         <Label 
-            Text="Edit Student"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            Text="Rediģēt studentu"
+            Style="{StaticResource SubHeadline}"
+            HorizontalOptions="Center"
+        />
 
-        <Label Text="Name"/>
-        <Entry x:Name="Name"/>
-        <Label Text="Surname"/>
-        <Entry x:Name="Surname"/>
-        <Picker x:Name="GenderPicker" Title="Gender">
+        <Label Text="Vārds"/>
+        <Entry x:Name="Name" HorizontalOptions="Start" MinimumWidthRequest="400"/>
+        <Label Text="Uzvārds"/>
+        <Entry x:Name="Surname" HorizontalOptions="Start" MinimumWidthRequest="400"/>
+        <Picker x:Name="GenderPicker" Title="Dzimums" HorizontalOptions="Start" MinimumWidthRequest="400">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Man</x:String>
@@ -21,10 +22,12 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
-        <Label Text="Student Id number"/>
-        <Entry x:Name="StudentIdNumber"/>
-        
-        <Button Text="Save" Clicked="OnSaveClicked"/>
-        <Button Text="Cancel" Clicked="OnCancelClicked"/>
+        <Label Text="Studenta Id numurs"/>
+        <Entry x:Name="StudentIdNumber" HorizontalOptions="Start" MinimumWidthRequest="400"/>
+
+        <HorizontalStackLayout Spacing="5" Padding="0,5">
+            <Button Text="Saglabāt" Clicked="OnSaveClicked"/>
+            <Button Text="Atcelt" Clicked="OnCancelClicked"/>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

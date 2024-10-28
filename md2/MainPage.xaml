@@ -3,63 +3,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="md2.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
 
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1"
-            />
-
+    <VerticalStackLayout>
+        <Grid
+            Padding="30,20"
+            ColumnSpacing="20"
+            ColumnDefinitions="Auto, Auto, Auto, Auto, Auto"
+            RowDefinitions="100"
+            HorizontalOptions="Center"
+        >
             <Button
                 x:Name="CreateTestData"
-                Text="Create Test Data" 
+                Text="Izveidot testa datus" 
                 Clicked="OnSeedDataButtonClicked"
-                HorizontalOptions="Fill"
+                Grid.Column="0"
             />
-
             <Button
                 x:Name="LogData"
-                Text="Print DataManager contents" 
+                Text="Izprintēt DataManager saturu" 
                 Clicked="OnLogButtonClicked"
-                HorizontalOptions="Fill"
+                Grid.Column="1"
             />
-
             <Button
                 x:Name="ResetDataManager"
-                Text="Reset DataManager" 
+                Text="Atiestatīt DataManager" 
                 Clicked="OnResetButtonClicked"
-                HorizontalOptions="Fill"
+                Grid.Column="2"
             />
-
             <Button
                 x:Name="SaveDataToFile"
-                Text="Save to data.json" 
+                Text="Saglabāt datus failā" 
                 Clicked="OnSaveButtonClicked"
-                HorizontalOptions="Fill"
+                Grid.Column="3"
             />
-
             <Button
                 x:Name="LoadDataFromFile"
-                Text="Load from data.json" 
+                Text="Ielādēt datus no faila" 
                 Clicked="OnLoadButtonClicked"
-                HorizontalOptions="Fill"
+                Grid.Column="4"
             />
-
-            <Label x:Name="LogOutput" Text="test"/>
-
-            <!--<ListView x:Name="TestList">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Label Text="{Binding Name}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            -->
-        </VerticalStackLayout>
-    </ScrollView>
-
+        </Grid>
+        <ScrollView>
+                <Label x:Name="LogOutput" Text="" Padding="100,0"/>
+        </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>

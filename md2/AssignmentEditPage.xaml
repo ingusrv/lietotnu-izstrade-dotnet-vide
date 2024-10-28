@@ -2,21 +2,23 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="md2.AssignmentEditPage"
-             Title="AssignmentEditPage">
-    <VerticalStackLayout>
+             Title="Rediģēt uzdevumu">
+    <VerticalStackLayout Padding="20, 10" Spacing="10">
         <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            Text="Rediģēt uzdevumu"
+            Style="{StaticResource SubHeadline}"
+            HorizontalOptions="Center"
+        />
 
-        <Label Text="Deadline"/>
+        <Label Text="Iesniegšanas termiņš"/>
         <DatePicker x:Name="Deadline"/>
-        <Picker x:Name="CoursePicker" Title="Course"/>
-        <Label Text="Description"/>
-        <Editor x:Name="Description" Text=""/>
+        <Picker x:Name="CoursePicker" Title="Kurss" HorizontalOptions="Start" MinimumWidthRequest="400"/>
+        <Label Text="Apraksts"/>
+        <Editor x:Name="Description" Text="" HorizontalOptions="Start" MinimumWidthRequest="400"/>
 
-        <Button Text="Save" Clicked="OnSaveClicked"/>
-        <Button Text="Cancel" Clicked="OnCancelClicked"/>
-
+        <HorizontalStackLayout Spacing="5" Padding="0,5">
+            <Button Text="Saglabāt" Clicked="OnSaveClicked"/>
+            <Button Text="Atcelt" Clicked="OnCancelClicked"/>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
