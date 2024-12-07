@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="md3.CourseEditPage"
+             Title="Rediģēt kursu">
+    <VerticalStackLayout Padding="20, 10" Spacing="10">
+        <Label 
+            Text="Rediģēt kursu"
+            Style="{StaticResource SubHeadline}"
+            HorizontalOptions="Center"
+        />
+
+        <Picker x:Name="TeacherPicker" Title="Pasniedzējs" HorizontalOptions="Start" MinimumWidthRequest="400"/>
+        <Label Text="Kursa Nosaukums"/>
+        <Entry x:Name="CourseName" HorizontalOptions="Start" MinimumWidthRequest="400"/>
+
+        <HorizontalStackLayout Spacing="5" Padding="0,5">
+            <Button Text="Saglabāt" Clicked="OnSaveClicked"/>
+            <Button Text="Atcelt" Clicked="OnCancelClicked"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="md3.DataPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="20,10">
+            <!-- Pieliku add pogas arī pie pārējām sadaļām, lai bez testa datiem no nulles varētu izveidot visu struktūru -->
+            <Label
+                Text="Pasniedzēji"
+                Style="{StaticResource SubHeadline}"
+                HorizontalOptions="Start"
+            />
+            <Button
+                Text="Pievienot pasniedzēju"
+                Clicked="OnTeacherCreateClicked"
+                HorizontalOptions="Start"
+            />
+            <ListView ItemsSource="{Binding Teachers}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <VerticalStackLayout Margin="20" Spacing="5">
+                                <Label Text="{Binding FullName, StringFormat='Vārds: {0}'}"/>
+                                <Label Text="{Binding Gender, StringFormat='Dzimums: {0}'}"/>
+                                <Label Text="{Binding ContractDate, StringFormat='Darba uzsākšanas datums: {0:D}'}"/>
+
+                                <HorizontalStackLayout Spacing="5" Padding="0,5">
+                                    <Button
+                                        Text="Rediģēt"
+                                        Clicked="OnTeacherEditClicked"
+                                        BindingContext="{Binding}"
+                                    />
+                                    <Button
+                                        Text="Dzēst"
+                                        Clicked="OnTeacherDeleteClicked"
+                                        BindingContext="{Binding}"
+                                    />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label
+                Text="Studenti"
+                Style="{StaticResource SubHeadline}"
+                HorizontalOptions="Start"
+            />
+            <Button
+                Text="Pievienot studentu"
+                Clicked="OnStudentCreateClicked"
+                HorizontalOptions="Start"
+            />
+            <ListView ItemsSource="{Binding Students}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <VerticalStackLayout Margin="20" Spacing="5">
+                                <!-- Šie met brīdinājumus par to ka property not found, bet viss strādā-->
+                                <Label Text="{Binding FullName, StringFormat='Vārds: {0}'}"/>
+                                <Label Text="{Binding Gender, StringFormat='Dzimums: {0}'}"/>
+                                <Label Text="{Binding StudentIdNumber, StringFormat='Studenta Id numurs: {0}'}"/>
+
+                                <HorizontalStackLayout Spacing="5" Padding="0,5">
+                                    <Button
+                                        Text="Rediģēt"
+                                        Clicked="OnStudentEditClicked"
+                                        BindingContext="{Binding}"
+                                        HorizontalOptions="Start"
+                                    />
+                                    <Button
+                                        Text="Dzēst"
+                                        Clicked="OnStudentDeleteClicked"
+                                        BindingContext="{Binding}"
+                                    />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label
+                Text="Kursi"
+                Style="{StaticResource SubHeadline}"
+                HorizontalOptions="Start"
+            />
+            <Button
+                Text="Pievienot kursu"
+                Clicked="OnCourseCreateClicked"
+                HorizontalOptions="Start"
+            />
+            <ListView ItemsSource="{Binding Courses}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <VerticalStackLayout Margin="20">
+                                <Label Text="{Binding Name, StringFormat='Nosaukums: {0}'}"/>
+                                <Label Text="{Binding Teacher.FullName, StringFormat='Pasniedzējs: {0}'}"/>
+
+                                <HorizontalStackLayout Spacing="5" Padding="0,5">
+                                    <Button
+                                        Text="Rediģēt"
+                                        Clicked="OnCourseEditClicked"
+                                        BindingContext="{Binding}"
+                                    />
+                                    <Button
+                                        Text="Dzēst"
+                                        Clicked="OnCourseDeleteClicked"
+                                        BindingContext="{Binding}"
+                                    />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label
+                Text="Uzdevumi"
+                Style="{StaticResource SubHeadline}"
+                HorizontalOptions="Start"
+            />
+            <Button
+                Text="Pievienot uzdevumu"
+                Clicked="OnAssignmentCreateClicked"
+                HorizontalOptions="Start"
+            />
+            <ListView ItemsSource="{Binding Assignments}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <VerticalStackLayout Margin="20">
+                                <Label Text="{Binding Description, StringFormat='Apraksts: {0}'}"/>
+                                <Label Text="{Binding Course.Name, StringFormat='Kurss: {0}'}"/>
+                                <Label Text="{Binding Deadline, StringFormat='Iesniegšanas termiņš: {0:D}'}"/>
+
+                                <HorizontalStackLayout Spacing="5" Padding="0,5">
+                                    <Button
+                                        Text="Rediģēt"
+                                        Clicked="OnAssignmentEditClicked"
+                                        BindingContext="{Binding}"
+                                    />
+                                    <Button
+                                        Text="Dzēst"
+                                        Clicked="OnAssignmentDeleteClicked"
+                                        BindingContext="{Binding}"
+                                    />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Label
+                Text="Iesniegumi"
+                Style="{StaticResource SubHeadline}"
+                HorizontalOptions="Start"
+            />
+            <Button
+                Text="Pievienot iesniegumu"
+                Clicked="OnSubmissionCreateClicked"
+                HorizontalOptions="Start"
+            />
+            <ListView ItemsSource="{Binding Submissions}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <VerticalStackLayout Margin="20">
+                                <Label Text="{Binding Assignment.Description, StringFormat='Uzdevuma apraksts: {0}'}"/>
+                                <Label Text="{Binding Student.FullName, StringFormat='Studenta vārds: {0}'}"/>
+                                <Label Text="{Binding SubmissionTime, StringFormat='Iesniegšanas laiks: {0:D}'}"/>
+                                <Label Text="{Binding Score, StringFormat='Vērtējums: {0}'}"/>
+
+                                <HorizontalStackLayout Spacing="5" Padding="0,5">
+                                    <Button
+                                        Text="Rediģēt"
+                                        Clicked="OnSubmissionEditClicked"
+                                        BindingContext="{Binding}"
+                                    />
+                                    <Button
+                                        Text="Dzēst"
+                                        Clicked="OnSubmissionDeleteClicked"
+                                        BindingContext="{Binding}"
+                                    />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

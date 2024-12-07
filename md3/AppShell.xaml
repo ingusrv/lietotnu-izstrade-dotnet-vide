@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="md3.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:md3"
+    Shell.FlyoutBehavior="Disabled"
+    Title="md3">
+
+    <TabBar>
+        <ShellContent
+            Title="Sākums"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage"
+        />
+        <ShellContent
+            Title="Datu saraksts"
+            ContentTemplate="{DataTemplate local:DataPage}"
+            Route="DataPage"
+        />
+    </TabBar>
+</Shell>

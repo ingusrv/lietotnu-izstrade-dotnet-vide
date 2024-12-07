@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="md3.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid
+                Padding="30,20"
+                ColumnSpacing="20"
+                ColumnDefinitions="Auto, Auto, Auto, Auto, Auto"
+                RowDefinitions="100"
+                HorizontalOptions="Center"
+            >
+                <Button
+                    x:Name="CreateTestData"
+                    Text="Izveidot testa datus" 
+                    Clicked="OnSeedDataButtonClicked"
+                    Grid.Column="0"
+                />
+                <Button
+                    x:Name="LogData"
+                    Text="Izprintēt DataManager saturu" 
+                    Clicked="OnLogButtonClicked"
+                    Grid.Column="1"
+                />
+                <Button
+                    x:Name="ResetDataManager"
+                    Text="Izdzēst visus datus no datubāzes" 
+                    Clicked="OnResetButtonClicked"
+                    Grid.Column="2"
+                />
+                <!--
+                <Button
+                    x:Name="SaveDataToFile"
+                    Text="Saglabāt datus failā" 
+                    Clicked="OnSaveButtonClicked"
+                    Grid.Column="3"
+                />
+                <Button
+                    x:Name="LoadDataFromFile"
+                    Text="Ielādēt datus no faila" 
+                    Clicked="OnLoadButtonClicked"
+                    Grid.Column="4"
+                />
+                -->
+            </Grid>
+            <Label x:Name="LogOutput" Text="" Padding="100,0"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
