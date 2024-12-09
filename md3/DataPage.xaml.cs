@@ -1,5 +1,6 @@
 ﻿using CourseManagementLib;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace md3;
 
@@ -49,7 +50,7 @@ public partial class DataPage : ContentPage
 
 	public DataPage()
 	{
-		BindingContext = this;
+		//BindingContext = this;
 		InitializeComponent();
 	}
 
@@ -67,43 +68,64 @@ public partial class DataPage : ContentPage
 
 	public async void OnCourseCreateClicked(object sender, EventArgs e)
 	{
-		if (_dataManager.Teachers.Count() == 0)
+		try
 		{
-			await DisplayAlert("Kļūda", "Lūdzu izveidojiet vismaz vienu pasniedzēju!", "Ok");
-			return;
-		}
+			if (_dataManager.Teachers.Count() == 0)
+			{
+				await DisplayAlert("Kļūda", "Lūdzu izveidojiet vismaz vienu pasniedzēju!", "Ok");
+				return;
+			}
 
-		var CourseEditPage = new CourseEditPage(new Course(), true);
-		await Navigation.PushAsync(CourseEditPage);
+			var CourseEditPage = new CourseEditPage(new Course(), true);
+			await Navigation.PushAsync(CourseEditPage);
+		}
+		catch (Exception ex) 
+		{
+			await DisplayAlert("Kļūda", "Neizdevās izveidot savienojumu ar datubāzi: " + ex.Message, "Ok");
+		}
     }
 
 	public async void OnAssignmentCreateClicked(object sender, EventArgs e)
 	{
-		if (_dataManager.Courses.Count() == 0)
+		try
 		{
-			await DisplayAlert("Kļūda", "Lūdzu izveidojiet vismaz vienu kursu!", "Ok");
-			return;
-		}
+			if (_dataManager.Courses.Count() == 0)
+			{
+				await DisplayAlert("Kļūda", "Lūdzu izveidojiet vismaz vienu kursu!", "Ok");
+				return;
+			}
 
-        var AssignmentEditPage = new AssignmentEditPage(new Assignment(), true);
-        await Navigation.PushAsync(AssignmentEditPage);
+			var AssignmentEditPage = new AssignmentEditPage(new Assignment(), true);
+			await Navigation.PushAsync(AssignmentEditPage);
+		}
+		catch (Exception ex) 
+		{
+			await DisplayAlert("Kļūda", "Neizdevās izveidot savienojumu ar datubāzi: " + ex.Message, "Ok");
+		}
     }
 
 	public async void OnSubmissionCreateClicked(object sender, EventArgs e)
 	{
-		if (_dataManager.Students.Count() == 0)
+		try
 		{
-			await DisplayAlert("Kļūda", "Lūdzu izveidojiet vismaz vienu studentu!", "Ok");
-			return;
-		}
-		if (_dataManager.Assignments.Count() == 0)
-		{
-			await DisplayAlert("Kļūda", "Lūdzu izveidojiet vismaz vienu uzdevumu!", "Ok");
-			return;
-		}
+			if (_dataManager.Students.Count() == 0)
+			{
+				await DisplayAlert("Kļūda", "Lūdzu izveidojiet vismaz vienu studentu!", "Ok");
+				return;
+			}
+			if (_dataManager.Assignments.Count() == 0)
+			{
+				await DisplayAlert("Kļūda", "Lūdzu izveidojiet vismaz vienu uzdevumu!", "Ok");
+				return;
+			}
 
-		var SubmissionEditPage = new SubmissionEditPage(new Submission(), true);
-		await Navigation.PushAsync(SubmissionEditPage);
+			var SubmissionEditPage = new SubmissionEditPage(new Submission(), true);
+			await Navigation.PushAsync(SubmissionEditPage);
+		}
+		catch (Exception ex) 
+		{
+			await DisplayAlert("Kļūda", "Neizdevās izveidot savienojumu ar datubāzi: " + ex.Message, "Ok");
+		}
     }
 	
 	// edit pogu funkcionalitāte - kad grib rediģēt esošu ierakstu
@@ -284,10 +306,29 @@ public partial class DataPage : ContentPage
 
 	// ļoti slikta mājaslapa reklāmu ziņā, bet noderīga informācijas ziņā
 	// https://trycatchdebug.net/news/1172680/net-8-maui-listview-refresh
-	protected override void OnAppearing()
+	protected override async void OnAppearing()
     {
-        base.OnAppearing();
 		Debug.WriteLine("on appear");
+
+		// ļoti hacky veids kā sākotnēji iztestēt vai datubāze strādā
+		// ja nestrādā tad uzmetam paziņojumu ka nevarēja savienoties
+		try
+		{
+			if (!_dataManager.Database.CanConnect())
+			{
+				Debug.WriteLine("nevaram savienoties");
+				await DisplayAlert("Kļūda", "Neizdevās izveidot savienojumu ar datubāzi!", "Ok");
+				return;
+			}
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine("datubāze vispār nestrādā");
+			await DisplayAlert("Kļūda", "Neizdevās izveidot savienojumu ar datubāzi: " + ex.Message, "Ok");
+			return;
+		}
+
+        base.OnAppearing();
 		BindingContext = null;
 		BindingContext = this;
     }

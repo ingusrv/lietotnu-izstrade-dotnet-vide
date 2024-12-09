@@ -38,10 +38,10 @@ namespace md3
 
             if (success)
             {
-                await DisplayAlert("Paziņojums", "Datubāze iztīrīta!", "Ok");
+                await DisplayAlert("Paziņojums", "Visi dati izdēsti!", "Ok");
             } else
             {
-                await DisplayAlert("Kļūda", "Neizdevās iztīrīt datubāzi!", "Ok");
+                await DisplayAlert("Kļūda", "Neizdevās izdzēst datus no datubāzes!", "Ok");
             }
         }
 

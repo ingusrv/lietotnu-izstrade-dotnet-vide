@@ -32,38 +32,45 @@ namespace CourseManagementLib
         }
 
         public string Print() 
-        { 
-            string result = "Teachers:\n";
-            foreach (var teacher in Teachers)
+        {
+            try
             {
-                result += teacher.ToString() + "\n";
-            }
+                string result = "Teachers:\n";
+                foreach (var teacher in Teachers)
+                {
+                    result += teacher.ToString() + "\n";
+                }
 
-            result += "\nStudents:\n";
-            foreach (var student in Students)
+                result += "\nStudents:\n";
+                foreach (var student in Students)
+                {
+                    result += student.ToString() + "\n";
+                }
+
+                result += "\nCourses:\n";
+                foreach (var course in Courses)
+                {
+                    result += course.ToString() + "\n";
+                }
+
+                result += "\nAssignments:\n";
+                foreach (var assignment in Assignments)
+                {
+                    result += assignment.ToString() + "\n";
+                }
+
+                result += "\nSubmissions:\n";
+                foreach (var submission in Submissions)
+                {
+                    result += submission.ToString() + "\n";
+                }
+
+                return result;
+
+            } catch
             {
-                result += student.ToString() + "\n";
+                return "";
             }
-
-            result += "\nCourses:\n";
-            foreach (var course in Courses)
-            {
-                result += course.ToString() + "\n";
-            }
-
-            result += "\nAssignments:\n";
-            foreach (var assignment in Assignments)
-            {
-                result += assignment.ToString() + "\n";
-            }
-
-            result += "\nSubmissions:\n";
-            foreach (var submission in Submissions)
-            {
-                result += submission.ToString() + "\n";
-            }
-
-            return result;
         }
         public bool Load(string path)
         {
@@ -153,7 +160,7 @@ namespace CourseManagementLib
 
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
@@ -170,7 +177,7 @@ namespace CourseManagementLib
 
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
