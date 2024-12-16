@@ -5,12 +5,11 @@ namespace md3
 {
     public partial class MainPage : ContentPage
     {
-        // https://stackoverflow.com/questions/74789634/how-to-share-data-between-pages-in-maui
-        //private readonly IDataManager _dataManager = DependencyService.Get<IDataManager>();
-        private readonly DBDataManager _dataManager = App.DBDataManager;
+        private readonly IDataManager _dataManager;
 
-        public MainPage()
+        public MainPage(IServiceProvider provider)
         {
+            _dataManager = provider.GetRequiredService<IDataManager>();
             InitializeComponent();
         }
 
@@ -21,9 +20,7 @@ namespace md3
 
         private async void OnSeedDataButtonClicked(object sender, EventArgs e)
         {
-            bool success = _dataManager.CreateTestData();
-
-            if (success)
+            if (_dataManager.CreateTestData())
             {
                 await DisplayAlert("Paziņojums", "Testa dati izveidoti!", "Ok");
             } else
@@ -34,9 +31,7 @@ namespace md3
 
         private async void OnResetButtonClicked(object sender, EventArgs e)
         {
-            bool success = _dataManager.Reset();
-
-            if (success)
+            if (_dataManager.Reset())
             {
                 await DisplayAlert("Paziņojums", "Visi dati izdēsti!", "Ok");
             } else
@@ -47,9 +42,7 @@ namespace md3
 
         private async void OnSaveButtonClicked(object sender, EventArgs e)
         {
-            bool success = _dataManager.Save("C:\\Windows\\Temp\\data.json");
-
-            if (success)
+            if (_dataManager.Save("C:\\Windows\\Temp\\data.json"))
             {
                 await DisplayAlert("Paziņojums", "Dati saglabāti!", "Ok");
             }
@@ -58,11 +51,10 @@ namespace md3
                 await DisplayAlert("Kļūda", "Neizdevās saglabāt datus!", "Ok");
             }
         }
+
         private async void OnLoadButtonClicked(object sender, EventArgs e)
         {
-            bool success = _dataManager.Load("C:\\Windows\\Temp\\data.json");
-
-            if (success)
+            if (_dataManager.Load("C:\\Windows\\Temp\\data.json"))
             {
                 await DisplayAlert("Paziņojums", "Dati ielādēti!", "Ok");
             }

@@ -69,6 +69,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
 		  <PrivateAssets>all</PrivateAssets>
@@ -88,6 +89,24 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\CourseManagementLib\CourseManagementLib.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="View\AssignmentPage.xaml.cs">
+	    <DependentUpon>AssignmentPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\CoursePage.xaml.cs">
+	    <DependentUpon>CoursePage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\StudentPage.xaml.cs">
+	    <DependentUpon>StudentPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\SubmissionPage.xaml.cs">
+	    <DependentUpon>SubmissionPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\TeacherPage.xaml.cs">
+	    <DependentUpon>TeacherPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

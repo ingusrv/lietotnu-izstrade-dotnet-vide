@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace CourseManagementLib
 {
-    public class DataManager : IDataManager
+    // TODO: interfeiss pagaidām izkomentēts ārā jo šis datamanager tam vairs neatbilst un nav laika (slinkums) šobrīd izlabot :D
+    public class DataManager// : IDataManager
     {
         public DataRepository Data { get; set; }
 

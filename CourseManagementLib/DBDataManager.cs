@@ -20,8 +20,6 @@ namespace CourseManagementLib
            _connectionString = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
         }
 
-        public DBDataManager(DbContextOptions<DBDataManager> options) : base(options) { }
-
         public DBDataManager(string connectionString) {
             _connectionString = connectionString;
         }
@@ -76,9 +74,16 @@ namespace CourseManagementLib
         {
             return false;
         }
-        public bool Save(string path) 
+        public bool Save(string path = "./") 
         { 
-            return false;
+            try
+            {
+                SaveChanges();
+                return true;
+            } catch
+            { 
+                return false;
+            }
         }
         public bool CreateTestData()
         {
@@ -159,8 +164,7 @@ namespace CourseManagementLib
                 SaveChanges();
 
                 return true;
-            }
-            catch
+            } catch
             {
                 return false;
             }
@@ -176,17 +180,159 @@ namespace CourseManagementLib
                 Students.ExecuteDelete();
 
                 return true;
-            }
-            catch
+            } catch
             {
                 return false;
             }
         }
 
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Course> Courses { get; set; }
-        public DbSet<Assignment> Assignments { get; set; }
-        public DbSet<Submission> Submissions { get; set; }
+        public List<Student> GetAllStudents()
+        {
+            return Students.ToList();
+        }
+        public List<Teacher> GetAllTeachers()
+        {
+            return Teachers.ToList();
+        }
+        public List<Course> GetAllCourses()
+        {
+            return Courses.ToList();
+        }
+        public List<Assignment> GetAllAssignments()
+        {
+            return Assignments.ToList();
+        }
+        public List<Submission> GetAllSubmissions()
+        {
+            return Submissions.ToList();
+        }
+
+        public bool AddStudent(Student student)
+        {
+            try
+            {
+                Students.Add(student);
+                SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+        public bool AddTeacher(Teacher teacher)
+        {
+            try
+            {
+                Teachers.Add(teacher);
+                SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+        public bool AddCourse(Course course)
+        {
+            try
+            {
+                Courses.Add(course);
+                SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+        public bool AddAssignment(Assignment assignment)
+        {
+            try
+            {
+                Assignments.Add(assignment);
+                SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+        public bool AddSubmission(Submission submission)
+        {
+            try
+            {
+                Submissions.Add(submission);
+                SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveStudent(Student student)
+        {
+            try
+            {
+                Students.Remove(student);
+                SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+        public bool RemoveTeacher(Teacher teacher)
+        {
+            try
+            {
+                Teachers.Remove(teacher);
+                SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+        public bool RemoveCourse(Course course)
+        {
+            try
+            {
+                Courses.Remove(course);
+                SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+        public bool RemoveAssignment(Assignment assignment)
+        {
+            try
+            {
+                Assignments.Remove(assignment);
+                SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+        public bool RemoveSubmission(Submission submission)
+        {
+            try
+            {
+                Submissions.Remove(submission);
+                SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+
+        private DbSet<Student> Students { get; set; }
+        private DbSet<Teacher> Teachers { get; set; }
+        private DbSet<Course> Courses { get; set; }
+        private DbSet<Assignment> Assignments { get; set; }
+        private DbSet<Submission> Submissions { get; set; }
     }
 }

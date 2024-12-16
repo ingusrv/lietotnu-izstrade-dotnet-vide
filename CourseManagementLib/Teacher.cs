@@ -9,7 +9,6 @@ namespace CourseManagementLib
 {
     public class Teacher : Person
     {
-        public int Id { get; set; }
         [JsonConverter(typeof(DateOnlyJsonConverter))]
         public DateOnly ContractDate { get; set; }
 

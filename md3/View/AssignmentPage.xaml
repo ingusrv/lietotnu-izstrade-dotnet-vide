@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:md3.ViewModel"
+             x:Class="md3.AssignmentPage"
+             Title="Rediģēt uzdevumu">
+    <VerticalStackLayout Padding="20, 10" Spacing="10">
+        <Label 
+            Text="Rediģēt uzdevumu"
+            Style="{StaticResource SubHeadline}"
+            HorizontalOptions="Center"
+        />
+
+        <Label Text="Iesniegšanas termiņš"/>
+        <DatePicker x:Name="Deadline" Date="{Binding Deadline}"/>
+        <Picker x:Name="CoursePicker" Title="Kurss"
+                ItemsSource="{Binding Courses}" SelectedItem="{Binding SelectedAssignment.Course}"
+                HorizontalOptions="Start" MinimumWidthRequest="400"/>
+        <Label Text="Apraksts"/>
+        <Editor x:Name="Description" Text="{Binding SelectedAssignment.Description}"
+                HorizontalOptions="Start" MinimumWidthRequest="400"/>
+
+        <HorizontalStackLayout Spacing="5" Padding="0,5">
+            <Button Text="Saglabāt" Command="{Binding SaveCommand}"/>
+            <Button Text="Atcelt" Command="{Binding CancelCommand}"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

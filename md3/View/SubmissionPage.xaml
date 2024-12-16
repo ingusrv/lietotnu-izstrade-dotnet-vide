@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:md3.ViewModel"
+             x:Class="md3.SubmissionPage"
+             Title="Rediģēt iesniegumu">
+    <VerticalStackLayout Padding="20, 10" Spacing="10">
+        <Label 
+            Text="Rediģēt iesniegumu"
+            Style="{StaticResource SubHeadline}"
+            HorizontalOptions="Center"
+        />
+
+        <Label Text="Iesniegšanas laiks"/>
+        <DatePicker x:Name="SubmissionDate" Date="{Binding SelectedSubmission.SubmissionTime}"/>
+        <TimePicker x:Name="SubmissionTime"  Time="{Binding SubmissionTime}"/>
+        <Picker x:Name="AssignmentPicker" Title="Uzdevums"
+                ItemsSource="{Binding Assignments}" SelectedItem="{Binding SelectedSubmission.Assignment}"
+                HorizontalOptions="Start" MinimumWidthRequest="400"/>
+        <Picker x:Name="StudentPicker" Title="Students"
+                ItemsSource="{Binding Students}" SelectedItem="{Binding SelectedSubmission.Student}"
+                HorizontalOptions="Start" MinimumWidthRequest="400"/>
+        <Label Text="Vērtējums"/>
+        <Entry x:Name="Score" Text="{Binding SelectedSubmission.Score}"
+               HorizontalOptions="Start" MinimumWidthRequest="400"/>
+
+        <HorizontalStackLayout Spacing="5" Padding="0,5">
+            <Button Text="Saglabāt" Command="{Binding SaveCommand}"/>
+            <Button Text="Atcelt" Command="{Binding CancelCommand}"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
