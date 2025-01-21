@@ -10,23 +10,25 @@ using System.Threading.Tasks;
 
 namespace CourseManagementLib
 {
-    public class DBDataManager : DbContext, IDataManager
+    public class DBDataManager : IDataManager
     {
-        private readonly string _connectionString;
+
+        private readonly DataManagerContext _context;
 
         public DBDataManager() {
             // tā kā connection string ir MAUI projektā no kura nevar veikt migrācijas, šim projektam arī vajag config failu
             // lai kaut kādā veidā tiktu pie connection string
-           _connectionString = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
+            var options = new DbContextOptionsBuilder<DataManagerContext>().UseSqlServer(connectionString).Options;
+            _context = new DataManagerContext(options);
         }
-
         public DBDataManager(string connectionString) {
-            _connectionString = connectionString;
+            var options = new DbContextOptionsBuilder<DataManagerContext>().UseSqlServer(connectionString).Options;
+            _context = new DataManagerContext(options);
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DBDataManager(DataManagerContext context)
         {
-            optionsBuilder.UseSqlServer(_connectionString);
+            this._context = context;
         }
 
         public string Print() 
@@ -34,31 +36,31 @@ namespace CourseManagementLib
             try
             {
                 string result = "Teachers:\n";
-                foreach (var teacher in Teachers)
+                foreach (var teacher in _context.Teachers)
                 {
                     result += teacher.ToString() + "\n";
                 }
 
                 result += "\nStudents:\n";
-                foreach (var student in Students)
+                foreach (var student in _context.Students)
                 {
                     result += student.ToString() + "\n";
                 }
 
                 result += "\nCourses:\n";
-                foreach (var course in Courses)
+                foreach (var course in _context.Courses)
                 {
                     result += course.ToString() + "\n";
                 }
 
                 result += "\nAssignments:\n";
-                foreach (var assignment in Assignments)
+                foreach (var assignment in _context.Assignments)
                 {
                     result += assignment.ToString() + "\n";
                 }
 
                 result += "\nSubmissions:\n";
-                foreach (var submission in Submissions)
+                foreach (var submission in _context.Submissions)
                 {
                     result += submission.ToString() + "\n";
                 }
@@ -78,7 +80,7 @@ namespace CourseManagementLib
         { 
             try
             {
-                SaveChanges();
+                _context.SaveChanges();
                 return true;
             } catch
             { 
@@ -104,8 +106,8 @@ namespace CourseManagementLib
                     ContractDate = new DateOnly(2023, 12, 7)
                 };
 
-                Teachers.Add(teacher);
-                Teachers.Add(teacher2);
+                _context.Teachers.Add(teacher);
+                _context.Teachers.Add(teacher2);
 
                 var course = new Course
                 {
@@ -118,8 +120,8 @@ namespace CourseManagementLib
                     Name = "Spēļu izstrāde ar Unity"
                 };
 
-                Courses.Add(course);
-                Courses.Add(course2);
+                _context.Courses.Add(course);
+                _context.Courses.Add(course2);
 
                 var assignment = new Assignment
                 {
@@ -134,14 +136,14 @@ namespace CourseManagementLib
                     Description = "Pirmās spēles nodevums"
                 };
 
-                Assignments.Add(assignment);
-                Assignments.Add(assignment2);
+                _context.Assignments.Add(assignment);
+                _context.Assignments.Add(assignment2);
 
                 var student = new Student("Ingus", "Valheims", Gender.Man, "abc1234");
                 var student2 = new Student("Elīza", "Avotiņa", Gender.Woman, "def4321");
 
-                Students.Add(student);
-                Students.Add(student2);
+                _context.Students.Add(student);
+                _context.Students.Add(student2);
 
                 var submission = new Submission
                 {
@@ -158,10 +160,10 @@ namespace CourseManagementLib
                     Score = 100
                 };
 
-                Submissions.Add(submission);
-                Submissions.Add(submission2);
+                _context.Submissions.Add(submission);
+                _context.Submissions.Add(submission2);
 
-                SaveChanges();
+                _context.SaveChanges();
 
                 return true;
             } catch
@@ -173,11 +175,11 @@ namespace CourseManagementLib
         {
             try
             {
-                Submissions.ExecuteDelete();
-                Assignments.ExecuteDelete();
-                Courses.ExecuteDelete();
-                Teachers.ExecuteDelete();
-                Students.ExecuteDelete();
+                _context.Submissions.ExecuteDelete();
+                _context.Assignments.ExecuteDelete();
+                _context.Courses.ExecuteDelete();
+                _context.Teachers.ExecuteDelete();
+                _context.Students.ExecuteDelete();
 
                 return true;
             } catch
@@ -188,31 +190,31 @@ namespace CourseManagementLib
 
         public List<Student> GetAllStudents()
         {
-            return Students.ToList();
+            return _context.Students.ToList();
         }
         public List<Teacher> GetAllTeachers()
         {
-            return Teachers.ToList();
+            return _context.Teachers.ToList();
         }
         public List<Course> GetAllCourses()
         {
-            return Courses.ToList();
+            return _context.Courses.ToList();
         }
         public List<Assignment> GetAllAssignments()
         {
-            return Assignments.ToList();
+            return _context.Assignments.ToList();
         }
         public List<Submission> GetAllSubmissions()
         {
-            return Submissions.ToList();
+            return _context.Submissions.ToList();
         }
 
         public bool AddStudent(Student student)
         {
             try
             {
-                Students.Add(student);
-                SaveChanges();
+                _context.Students.Add(student);
+                _context.SaveChanges();
                 return true;
             } catch
             {
@@ -223,8 +225,8 @@ namespace CourseManagementLib
         {
             try
             {
-                Teachers.Add(teacher);
-                SaveChanges();
+                _context.Teachers.Add(teacher);
+                _context.SaveChanges();
                 return true;
             } catch
             {
@@ -235,8 +237,8 @@ namespace CourseManagementLib
         {
             try
             {
-                Courses.Add(course);
-                SaveChanges();
+                _context.Courses.Add(course);
+                _context.SaveChanges();
                 return true;
             } catch
             {
@@ -247,8 +249,8 @@ namespace CourseManagementLib
         {
             try
             {
-                Assignments.Add(assignment);
-                SaveChanges();
+                _context.Assignments.Add(assignment);
+                _context.SaveChanges();
                 return true;
             } catch
             {
@@ -259,8 +261,8 @@ namespace CourseManagementLib
         {
             try
             {
-                Submissions.Add(submission);
-                SaveChanges();
+                _context.Submissions.Add(submission);
+                _context.SaveChanges();
                 return true;
             } catch
             {
@@ -272,8 +274,8 @@ namespace CourseManagementLib
         {
             try
             {
-                Students.Remove(student);
-                SaveChanges();
+                _context.Students.Remove(student);
+                _context.SaveChanges();
                 return true;
             } catch
             {
@@ -284,8 +286,8 @@ namespace CourseManagementLib
         {
             try
             {
-                Teachers.Remove(teacher);
-                SaveChanges();
+                _context.Teachers.Remove(teacher);
+                _context.SaveChanges();
                 return true;
             } catch
             {
@@ -296,8 +298,8 @@ namespace CourseManagementLib
         {
             try
             {
-                Courses.Remove(course);
-                SaveChanges();
+                _context.Courses.Remove(course);
+                _context.SaveChanges();
                 return true;
             } catch
             {
@@ -308,8 +310,8 @@ namespace CourseManagementLib
         {
             try
             {
-                Assignments.Remove(assignment);
-                SaveChanges();
+                _context.Assignments.Remove(assignment);
+                _context.SaveChanges();
                 return true;
             } catch
             {
@@ -320,19 +322,13 @@ namespace CourseManagementLib
         {
             try
             {
-                Submissions.Remove(submission);
-                SaveChanges();
+                _context.Submissions.Remove(submission);
+                _context.SaveChanges();
                 return true;
             } catch
             {
                 return false;
             }
         }
-
-        private DbSet<Student> Students { get; set; }
-        private DbSet<Teacher> Teachers { get; set; }
-        private DbSet<Course> Courses { get; set; }
-        private DbSet<Assignment> Assignments { get; set; }
-        private DbSet<Submission> Submissions { get; set; }
     }
 }
